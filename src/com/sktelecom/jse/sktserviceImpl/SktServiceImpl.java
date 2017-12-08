@@ -10,13 +10,22 @@ import com.sktelecom.jse.sktservice.SktService;
 public class SktServiceImpl implements SktService{
 	MemberBean[] members;
 	PhoneBean[] phones;
-	private int memberCount, phoneCount;
+	private int memberCount, phoneCount, customeNum;
 	public SktServiceImpl() {
+		memberCount = phoneCount = 0;
+		customeNum = 1000;
+		customeNum++;
 		members = new MemberBean[2];
 		phones = new PhoneBean[2];
+		// 멤버 변수
 	}
+	@Override
 	public void addCustomer(MemberBean member, 
 			PhoneBean phone) {
+		String customNum = createCustomeNum();
+		System.out.println("생성된 커스텀 넘버 : " + customNum);
+		member.setCustomNum("");
+		phone.setCustomNum("");
 		this.members[memberCount++] = member;
 		this.phones[phoneCount++] = phone; 
 	}
@@ -38,10 +47,16 @@ public class SktServiceImpl implements SktService{
 	}
 	@Override
 	public String makeNumber() {
-		int res1 = (int)(Math.random()*10000+1);
-		int res2 = (int)(Math.random()*10000+1);
+		int res1 = (int)(Math.random()*9999+0000);
+		int res2 = (int)(Math.random()*9999+0000);
 		String res = "010-" + res1 +"-"+ res2;
 		return res;
 		   }
+	@Override
+	public String createCustomeNum() {
+		return String.valueOf(customeNum++);
 	}
+	
+	}
+
 
